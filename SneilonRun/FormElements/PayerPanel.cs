@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using SnailonRun.Interfaces;
 
 namespace SnailonRun.FormElements
 {
-    public class PayerPanel
+    public class PayerPanel: IPanel
     {
-        public Panel AddPanel(int id, string name, EventHandler action)
+        public Panel CreatePanel(int id, string name, EventHandler[] actions)
         {
             var panel = new Panel { Name = "panelPlayer" + id };
             var lblName = new Label { Text = name, Width = 160 };
@@ -17,7 +18,7 @@ namespace SnailonRun.FormElements
                 Size = new Size(20, 20),
                 Location = new Point(165, 0)
             };
-            btDelete.Click += action;
+            btDelete.Click += actions[0];
             panel.Dock = DockStyle.Top;
             panel.Height = 25;
             panel.Controls.Add(lblName);

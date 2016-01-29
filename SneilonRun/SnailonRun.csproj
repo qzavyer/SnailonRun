@@ -64,6 +64,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\RunCalc.cs" />
+    <Compile Include="Interfaces\IPanel.cs" />
     <Compile Include="Models\Ante.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -74,6 +76,9 @@
     <Compile Include="FormElements\PayerPanel.cs" />
     <Compile Include="FormElements\SnailPanel.cs" />
     <Compile Include="MediaPlayer.cs" />
+    <Compile Include="Models\Game.cs" />
+    <Compile Include="Models\TimePeriod.cs" />
+    <Compile Include="Outer\FileSaver.cs" />
     <Compile Include="PlaceBonus.cs" />
     <Compile Include="PlaceKoef.cs" />
     <Compile Include="Models\Player.cs" />

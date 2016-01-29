@@ -5,6 +5,7 @@ namespace SnailonRun
     public class ShortName
     {
         private string _name;
+
         public ShortName(string name)
         {
             _name = name;

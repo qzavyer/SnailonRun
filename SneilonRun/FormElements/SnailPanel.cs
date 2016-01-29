@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using SnailonRun.Interfaces;
 
 namespace SnailonRun.FormElements
 {
-    class SnailPanel
+    class SnailPanel: IPanel
     {
-        public Panel AddPanel(int id, string name, EventHandler[] actions)
+        public Panel CreatePanel(int id, string name, EventHandler[] actions)
         {
             var panel = new Panel { Name = "panelSnail" + id };
             var lblName = new Label { Text = name, Width = 160 };

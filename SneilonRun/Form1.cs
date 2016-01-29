@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using SnailonRun.FormElements;
+using SnailonRun.Interfaces;
+using SnailonRun.Outer;
 
 namespace SnailonRun
 {
@@ -67,7 +69,7 @@ namespace SnailonRun
             panelPlayers.Controls.Clear();
         }
 
-        #region PayerControl
+        #region Payer Control
 
         private void BtAddPlayer_Click(object sender, EventArgs e)
         {
@@ -78,7 +80,6 @@ namespace SnailonRun
             tbPlayerName.Clear();
             tbPlayerName.Focus();
             var lst = new BindingList<Player>(_players);
-            //cbPlayer.
             cbPlayer.DataSource = lst;
             cbPlayer.DisplayMember = "ShortName";
             cbPlayer.ValueMember = "Id";
@@ -88,8 +89,8 @@ namespace SnailonRun
 
         private void AddPlayerPanel(int id, string name)
         {
-            var payerPanel = new PayerPanel();
-            panelPlayers.Controls.Add(payerPanel.AddPanel(id,name, BtRemovePlayer_CLick));
+            IPanel payerPanel = new PayerPanel();
+            panelPlayers.Controls.Add(payerPanel.CreatePanel(id,name, new EventHandler[] { BtRemovePlayer_CLick }));
         }
 
         private void BtRemovePlayer_CLick(object sender, EventArgs e)
@@ -122,10 +123,10 @@ namespace SnailonRun
         }
 
         private void AddSnailPanel(int id, string name)
-        {            
-            var snailPanel = new SnailPanel();
+        {
+            IPanel snailPanel = new SnailPanel();
             var actions = new EventHandler[] { BtSlice_Click, BtRemoveSnail_Click, BtNoSlice_Click };
-            panelSnails.Controls.Add(snailPanel.AddPanel(id, name, actions));
+            panelSnails.Controls.Add(snailPanel.CreatePanel(id, name, actions));
         }
         
         private void BtSlice_Click(object sender, EventArgs e)
@@ -168,6 +169,8 @@ namespace SnailonRun
 
         #endregion
 
+        #region  Ante Control
+
         private void BtAddAnte_Click(object sender, EventArgs e)
         {
             var id = _anteId;
@@ -208,7 +211,18 @@ namespace SnailonRun
         private void BtCalculate_Click(object sender, EventArgs e)
         {
             SetPlaces();
-            SaveLogFile(ConfigurationManager.AppSettings["LogFile"]);
+            var period = new TimePeriod
+            {
+                Start = _start,
+                End = _end
+            };
+            var game = new Game
+            {
+                Snails = _snails,
+                Players = _players
+            };
+            FileSaver fileSaver = new FileSaver(_dash, period, game );
+            fileSaver.SaveLogFile(ConfigurationManager.AppSettings["LogFile"]);
             ClearAntes();
         }
 
@@ -235,45 +249,6 @@ namespace SnailonRun
             }
         }
 
-        private void SaveLogFile(string filename)
-        {
-            using (var file = new StreamWriter(filename, true, Encoding.UTF8))
-            {
-                if (_dash == 1)
-                {
-                    file.WriteLine("{0:dd.MM.yyyy}", _end);
-                }
-                file.WriteLine("-- Забег № {0} --", _dash);
-                file.WriteLine("Время начала: {0:HH:mm:ss}", _start);
-                file.WriteLine("Время окончания: {0:HH:mm:ss}", _end);
-                file.WriteLine();
-                file.WriteLine("Дорожка\tИмя улиты\tВремя\tМесто\tБонус");
-                foreach (var snail in _snails.OrderBy(r => r.Route))
-                {
-                    file.WriteLine("{0}\t{1}\t{2:mm:ss}\t{3}\t{4}", snail.Route, snail.ShortName, snail.Time,
-                        snail.Place,
-                        snail.Bonus);
-                }
-                file.WriteLine();
-                file.WriteLine("Имя игрока\tИмя улиты\tСтавка\tВыигрыш");
-                foreach (var player in _players)
-                {
-                    foreach (var ante in player.Antes)
-                    {
-                        file.WriteLine("{0}\t{1}\t{2}\t{3}", player.ShortName, ante.Snail.ShortName, ante.Price,
-                            ante.Win);
-                    }
-                }
-                file.WriteLine();
-                file.WriteLine("Имя игрока\tСумма выигрышей");
-                foreach (var player in _players)
-                {
-                    file.WriteLine("{0}\t{1}", player.ShortName, player.Win);
-                }
-                file.WriteLine();
-            }
-        }
-
         private void ClearAntes()
         {
             foreach (var snail in _snails)
@@ -287,6 +262,8 @@ namespace SnailonRun
             }
             _anteId = 1;
         }
+
+        #endregion
 
         private void Play(object sender, EventArgs e)
         {
