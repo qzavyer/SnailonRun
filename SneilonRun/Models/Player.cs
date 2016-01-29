@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace SneilonRun
+namespace SnailonRun.Models
 {
     public class Player
     {

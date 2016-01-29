@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace SneilonRun
+namespace SnailonRun
 {
     public class ShortName
     {

@@ -1,4 +1,4 @@
-﻿namespace SneilonRun
+﻿namespace SnailonRun
 {
     partial class Form1
     {

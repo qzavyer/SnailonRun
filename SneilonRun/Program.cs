@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace SneilonRun
+namespace SnailonRun
 {
     static class Program
     {

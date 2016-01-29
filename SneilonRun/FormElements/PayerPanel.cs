@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace SneilonRun.FormElements
+namespace SnailonRun.FormElements
 {
     public class PayerPanel
     {

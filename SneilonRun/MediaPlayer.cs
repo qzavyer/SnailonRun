@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using NAudio.Wave;
 
-namespace SneilonRun
+namespace SnailonRun
 {
     internal interface IMediaPlayer
     {

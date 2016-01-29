@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SneilonRun
+namespace SnailonRun
 {
     public class PlaceKoef
     {

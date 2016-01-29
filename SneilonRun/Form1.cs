@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
-using System.Drawing;
+using SnailonRun.Models;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using SneilonRun.FormElements;
+using SnailonRun.FormElements;
 
-namespace SneilonRun
+namespace SnailonRun
 {
     public partial class Form1 : Form
     {

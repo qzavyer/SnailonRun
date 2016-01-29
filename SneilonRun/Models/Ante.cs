@@ -1,4 +1,4 @@
-﻿namespace SneilonRun
+﻿namespace SnailonRun.Models
 {
     public class Ante
     {
